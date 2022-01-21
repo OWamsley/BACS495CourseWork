@@ -15,36 +15,18 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-
-  
-  handleclick(i){
-    const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O' ;
-    this.setState({squares:squares, xIsNext: !this.state.xIsNext});
-  }
-
   renderSquare(i) {
-    return <Square value={this.state.squares[i]} 
-    onClick={() => this.props.onClick(i)}
-    />;
-
+    return (
+      <Square
+        value={this.props.squares[i]}
+        onClick={() => this.props.onClick(i)}
+      />
+    );
   }
 
   render() {
-    const winner = calculateWinner(this.props.squares);
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
-    }
-
     return (
       <div>
-        
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -70,9 +52,9 @@ class Game extends React.Component {
     super(props);
     this.state = {
       history: [{
-        squares: Array(9).fill(null),
+        squares: Array(9).fill(null)
       }],
-      xIsNext: true,
+      xIsNext: true
     };
   }
 
@@ -86,7 +68,7 @@ class Game extends React.Component {
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
       history: history.concat([{
-        squares: squares,
+        squares: squares
       }]),
       xIsNext: !this.state.xIsNext,
     });
@@ -132,6 +114,13 @@ class Game extends React.Component {
   }
 }
 
+// ========================================
+
+ReactDOM.render(
+  <Game />,
+  document.getElementById('root')
+);
+
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -152,12 +141,6 @@ function calculateWinner(squares) {
   return null;
 }
 
-// ========================================
-
-ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
-);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
