@@ -7,27 +7,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: ['one', 'two'],
+      toDoList: ['one', 'two'],
     };
   }
   render() {
-    console.log("asdfasdf");
     return (
       <>
         <ul>
-          {this.state.list.map(item => (
+          {this.state.toDoList.map(item => (
             <li key={item}>{item}</li>
           ))}
         </ul>
         <AddItem onClick={() => this.addListItem('test')} />
-      </>
+      </> 
     );
   }
 
   addListItem(task) {
+    
+    const lastList = this.state.toDoList;
+    console.log(lastList);
     this.setState({
-      list: this.list.push(task)
-    });
+      toDoList: lastList.push(task)
+    })
+    ;
   }
 
 
