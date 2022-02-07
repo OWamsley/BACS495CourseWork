@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import AddItem from './addItem.js';
+import TextBox from './textBox.js';
+import ClearList from './ClearList.js';
+import CheckBox from './CheckBox.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toDoList: ['one', 'two'],
+      toDoList: [],
     };
   }
   render() {
+    const toDoListed = this.state.toDoList.map(item => 
+      (<li key={item}>{<CheckBox value={item}/>}</li>
+    ));
     return (
       <>
+      <TextBox onSubmit={(i) => this.addListItem(i)}/>
         <ul>
-          {this.state.toDoList.map(item => (
-            <li key={item}>{item}</li>
-          ))}
+          {toDoListed}
         </ul>
-        <AddItem onClick={() => this.addListItem('test')} />
+      <ClearList onClick={(i) => this.clearList()} />
       </> 
     );
   }
@@ -26,14 +29,16 @@ class App extends React.Component {
   addListItem(task) {
     
     const lastList = this.state.toDoList;
-    console.log(lastList);
+    lastList.push(task);
     this.setState({
-      toDoList: lastList.push(task)
-    })
-    ;
+      toDoList: lastList
+    });
   }
 
-
-
+  clearList(){
+    this.setState({
+      toDoList: []
+    })
+  }
 }
 export default App;
